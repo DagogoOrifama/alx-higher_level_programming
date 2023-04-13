@@ -22,12 +22,12 @@ try:
 
         # Print statistics every 10 lines
         if line_count % 10 == 0:
-            print("Total file size: File size:", total_file_size)
-            for status_code in sorted(status_code_counts.keys()):
-                print(status_code, ":", status_code_counts[status_code])
+            print(f"Total file size: File size: {total_file_size}")
+            for code in sorted(status_code_counts.keys()):
+                print(f"{code}: {status_code_counts[code]}")
 
 except KeyboardInterrupt:
     # Print final statistics on keyboard interrupt
-    print("Total file size: File size:", total_file_size)
-    for status_code in sorted(status_code_counts.keys()):
-        print(status_code, ":", status_code_counts[status_code])
+    print(f"Total file size: File size: {total_file_size}")
+    for code in sorted(status_code_counts.keys()):
+        print(f"{code}: {status_code_counts[code]}")
