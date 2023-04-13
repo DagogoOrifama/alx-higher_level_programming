@@ -1,41 +1,33 @@
-#!/usr/bin/python3
-"""Log parsing script."""
 import sys
+from collections import defaultdict
 
-total_size = 0
-codes = {'200': 0, '301': 0, '400': 0, '401': 0,
-         '403': 0, '404': 0, '405': 0, '500': 0}
-iteration = 0
-
-
-def print_stats():
-    """Function that prints a resume of the stats."""
-    print("File size: {}".format(total_size))
-    for k, v in sorted(codes.items()):
-        if v is not 0:
-            print("{}: {}".format(k, v))
-
+# Initialize variables
+total_file_size = 0
+status_code_counts = defaultdict(int)
+line_count = 0
 
 try:
+    # Read lines from standard input
     for line in sys.stdin:
-        line = line.split()
-        if len(line) >= 2:
-            tmp = iteration
-            if line[-2] in codes:
-                codes[line[-2]] += 1
-                iteration += 1
-            try:
-                total_size += int(line[-1])
-                if tmp == iteration:
-                    iteration += 1
-            except:
-                if tmp == iteration:
-                    continue
+        # Parse input data
+        parts = line.strip().split()
+        ip_address = parts[0]
+        status_code = int(parts[-2])
+        file_size = int(parts[-1])
 
-        if iteration % 10 == 0:
-            print_stats()
+        # Update metrics
+        total_file_size += file_size
+        status_code_counts[status_code] += 1
+        line_count += 1
 
-    print_stats()
+        # Print statistics every 10 lines
+        if line_count % 10 == 0:
+            print("Total file size: File size:", total_file_size)
+            for status_code in sorted(status_code_counts.keys()):
+                print(status_code, ":", status_code_counts[status_code])
 
 except KeyboardInterrupt:
-    print_stats()
+    # Print final statistics on keyboard interrupt
+    print("Total file size: File size:", total_file_size)
+    for status_code in sorted(status_code_counts.keys()):
+        print(status_code, ":", status_code_counts[status_code])
