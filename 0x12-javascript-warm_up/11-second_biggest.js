@@ -1,19 +1,16 @@
 #!/usr/bin/node
 
-if (process.argv[2] === undefined || process.argv[3] === undefined) {
+const args = process.argv.slice(2); // Get the list of arguments, excluding the first two (node and script path)
+
+// Check if no argument is passed or only one argument is provided
+if (args.length === 0) {
+  console.log(0);
+} else if (args.length === 1) {
   console.log(0);
 } else {
-  let fmax = parseInt(process.argv[2]);
-  let nmax = parseInt(process.argv[3]);
-  process.argv.forEach((val, index) => {
-    if (index > 1) {
-      if (fmax < parseInt(val)) {
-        nmax = fmax;
-        fmax = parseInt(val);
-      } else if (parseInt(val) < fmax && parseInt(val) >= nmax) {
-        nmax = parseInt(val);
-      }
-    }
-  });
-  console.log(nmax);
+  const numbers = args.map(Number); // Convert arguments to numbers
+  const sortedNumbers = numbers.sort((a, b) => b - a); // Sort numbers in descending order
+  const secondLargest = sortedNumbers[1]; // Get the second element in the sorted list
+
+  console.log(secondLargest);
 }
