@@ -1,12 +1,16 @@
 #!/usr/bin/node
-function fact (n) {
-  if (isNaN(n)) {
+
+function computeFactorial(num) {
+  if (isNaN(num)) {
     return 1;
-  }
-  if (n === 1) {
+  } else if (num === 0) {
     return 1;
   } else {
-    return n * fact(n - 1);
+    return num * computeFactorial(num - 1);
   }
 }
-console.log(fact(parseInt(process.argv[2])));
+
+const num = parseInt(process.argv[2]); // Get the integer argument from command line
+
+console.log(computeFactorial(num));
+
