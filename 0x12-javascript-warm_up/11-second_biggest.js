@@ -1,9 +1,11 @@
 #!/usr/bin/node
-if (process.argv.length <= 3) {
+
+function compare (a, b) {
+  return b - a;
+}
+const arg = process.argv.length;
+if (arg <= 3) {
   console.log(0);
 } else {
-  const args = process.argv.map(Number)
-    .slice(2, process.argv.length)
-    .sort((a, b) => a - b);
-  console.log(args[args.length - 2]);
+  console.log(process.argv.slice(2).sort(compare)[1]);
 }
